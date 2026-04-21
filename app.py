@@ -1,4 +1,6 @@
 # --- Core Dependencies ---
+import os
+from dotenv import load_dotenv
 import uuid  # Generates unique IDs for users
 import PyPDF2  # Reads data from uploaded PDF files
 import traceback
@@ -6,12 +8,15 @@ from flask import Flask, request, jsonify, send_file  # Sets up our web server
 from flask_cors import CORS  # Allows cross-origin requests from our frontend
 import google.generativeai as genai  # The Google Gemini AI tools
 
+# Load environment variables from .env
+load_dotenv()
+
 # --- Application Setup ---
 app = Flask(__name__)
 CORS(app)  # Enable CORS so our browser page can talk to this local server
 
 # Set your Gemini API key here
-genai.configure(api_key="AIzaSyDeBNakje2f26JGyLNWn0igUtllizLMrmY")
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 SYSTEM_INSTRUCTION = """You are Brainy AI, a next-generation intelligent assistant built for students, developers, researchers, and curious minds.
 
